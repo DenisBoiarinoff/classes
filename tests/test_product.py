@@ -1,6 +1,9 @@
 import pytest
 
+from src.Category import Category
+from src.LawnGrass import LawnGrass
 from src.Product import Product
+from src.Smartphone import Smartphone
 
 
 def test_product_init() -> None:
@@ -57,3 +60,37 @@ def test_product_add(products_list) -> None:
     for product in products_list:
         total_sum += test_product + product
     assert total_sum == 93.5
+
+
+@pytest.mark.parametrize(
+    "left, right",
+    [
+        (
+            Product("p_1", "p_1_d", 1.0, 2),
+            Category("c_1", "c_1_d", [])
+        ),
+        (
+            LawnGrass("lg_1", "lg_1_d", 2.0, 1, "-", "-", "-"),
+            Smartphone("s_1", "s_1_d", "3.0", 1, "-", "-", 1, "1")
+        ),
+        (
+            Product("p_1", "p_1_d", 1.0, 2),
+            Smartphone("s_1", "s_1_d", "3.0", 1, "-", "-", 1, "1")
+        ),
+        (
+            Product("p_1", "p_1_d", 1.0, 2),
+            2
+        ),
+        (
+            Product("p_1", "p_1_d", 1.0, 2),
+            2.0
+        ),
+        (
+            Product("p_1", "p_1_d", 1.0, 2),
+            "2"
+        )
+    ]
+)
+def test_product_add_odd_data(left, right) -> None:
+    with pytest.raises(TypeError):
+        left + right

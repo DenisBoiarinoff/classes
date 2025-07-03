@@ -1,3 +1,5 @@
+import pytest
+
 from src.Category import Category
 
 
@@ -59,3 +61,20 @@ def test_category_str(products_list) -> None:
     out = str(category)
 
     assert out == "cat, количество продуктов: 10 шт."
+
+
+@pytest.mark.parametrize(
+    "input",
+    [
+        ([]),
+        ({}),
+        ("product"),
+        (1),
+        (2.0),
+        (Category("cat_1", "cat_1_desc", []))
+    ],
+)
+def test_category_add_odd_data(input) -> None:
+    categoty = Category("cat", "cate_desc", [])
+    categoty.add_product(input)
+    assert categoty.product_count == 0
