@@ -1,3 +1,5 @@
+from src.Product import Product
+
 class Category:
     category_count: int = 0
     product_count: int = 0
@@ -9,7 +11,7 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(products)
 
-    def add_product(self, product) -> None:
+    def add_product(self, product: Product) -> None:
         self.__products.append(product)
         Category.product_count += 1
 
