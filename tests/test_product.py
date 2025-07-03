@@ -25,7 +25,8 @@ def test_product_set_price_invalid_data(capsys) -> None:
     product.price = -14.1
     captured = capsys.readouterr()
     assert product.price == 14.5
-    assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
+    assert captured.out == ("Product('product_name', 'product_description', 14.5, 11)\nЦена не должна быть нулевая "
+                            "или отрицательная\n")
 
 
 def test_product_dict_init() -> None:
@@ -94,3 +95,18 @@ def test_product_add(products_list) -> None:
 def test_product_add_odd_data(left, right) -> None:
     with pytest.raises(TypeError):
         left + right
+
+
+@pytest.mark.parametrize(
+    "type_object, args, output",
+    [
+        (Product, ("p_1", "p_1_desc", 0, 0), "Product('p_1', 'p_1_desc', 0, 0)\n"),
+        (Smartphone, ("s_1", "s_1_desc", 0, 0, "-", "-", 1, "1"), "Smartphone('s_1', 's_1_desc', 0, 0)\n"),
+        (LawnGrass, ("lg_1", "lg_1_desc", 2.0, 1, "-", "-", "-"), "LawnGrass('lg_1', 'lg_1_desc', 2.0, 1)\n")
+
+    ]
+)
+def test_product_init_log(capsys, type_object, args, output) -> None:
+    type_object(*args)
+    captured = capsys.readouterr()
+    assert captured.out == output

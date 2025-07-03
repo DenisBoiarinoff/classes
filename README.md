@@ -27,6 +27,7 @@ poetry install
 
 - Содержит классы Category - категория товаров и Product - продукт категории товаров
 - Классы Smartphone и LawnGrass унаследованные от Product
+- Миксин ProductMixinLog
 ## Лицензия:
 
 Проект распространяется под [лицензией MIT](LICENSE).
