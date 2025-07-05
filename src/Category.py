@@ -30,3 +30,14 @@ class Category:
             result.append(str(product))
 
         return result
+
+    def middle_price(self) -> float:
+        result = 0
+        prices = [product.price for product in self.__products]
+
+        try:
+            result = sum(prices) / len(prices)
+        except ZeroDivisionError:
+            pass
+        finally:
+            return result
