@@ -57,7 +57,7 @@ def test_product_str(list, index, output, request) -> None:
 
 def test_product_add(products_list) -> None:
     total_sum = 0
-    test_product = Product("test", "test", 0, 0)
+    test_product = Product("test", "test", 0, 1)
     for product in products_list:
         total_sum += test_product + product
     assert total_sum == 93.5
@@ -100,8 +100,8 @@ def test_product_add_odd_data(left, right) -> None:
 @pytest.mark.parametrize(
     "type_object, args, output",
     [
-        (Product, ("p_1", "p_1_desc", 0, 0), "Product('p_1', 'p_1_desc', 0, 0)\n"),
-        (Smartphone, ("s_1", "s_1_desc", 0, 0, "-", "-", 1, "1"), "Smartphone('s_1', 's_1_desc', 0, 0)\n"),
+        (Product, ("p_1", "p_1_desc", 0, 1), "Product('p_1', 'p_1_desc', 0, 1)\n"),
+        (Smartphone, ("s_1", "s_1_desc", 0, 1, "-", "-", 1, "1"), "Smartphone('s_1', 's_1_desc', 0, 1)\n"),
         (LawnGrass, ("lg_1", "lg_1_desc", 2.0, 1, "-", "-", "-"), "LawnGrass('lg_1', 'lg_1_desc', 2.0, 1)\n")
 
     ]
@@ -110,3 +110,17 @@ def test_product_init_log(capsys, type_object, args, output) -> None:
     type_object(*args)
     captured = capsys.readouterr()
     assert captured.out == output
+
+
+@pytest.mark.parametrize(
+    "type_object, args",
+    [
+        (Product, ("p_1", "p_1_desc", 0, 0)),
+        (Smartphone, ("s_1", "s_1_desc", 0, 0, "-", "-", 1, "1")),
+        (LawnGrass, ("lg_1", "lg_1_desc", 2.0, 0, "-", "-", "-"))
+
+    ]
+)
+def test_product_invalid_quantity(type_object, args) -> None:
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        type_object(*args)

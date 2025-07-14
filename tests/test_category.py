@@ -78,3 +78,21 @@ def test_category_add_odd_data(input) -> None:
     categoty = Category("cat", "cate_desc", [])
     categoty.add_product(input)
     assert categoty.product_count == 0
+
+
+def test_category_average_price(products_list) -> None:
+    category = Category(
+        "cat",
+        "cat_desc",
+        products_list,
+    )
+    assert category.middle_price() == 1.55
+
+
+def test_category_average_empty_data() -> None:
+    category = Category(
+        "cat",
+        "cat_desc",
+        [],
+    )
+    assert category.middle_price() == 0
